@@ -142,7 +142,7 @@ class MemeFormState extends State<MemeForm> {
     children.add(
       Center(
           child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 30.0),
+        padding: const EdgeInsets.symmetric(vertical: 30.0),
         child: ElevatedButton(
             onPressed: () {
               // Validate returns true if the form is valid, or false otherwise.
