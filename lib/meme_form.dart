@@ -85,7 +85,7 @@ class MemeFormState extends State<MemeForm> {
             return null;
           },
           decoration: InputDecoration(
-            border: UnderlineInputBorder(),
+            border: const UnderlineInputBorder(),
             labelText: i == 0
                 ? 'Enter ${i + 1}st text'
                 : (i == 1
