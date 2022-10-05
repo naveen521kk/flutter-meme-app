@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meme_app/main.dart';
+import 'package:meme_app/meme_display.dart';
 
 // Create a Form widget.
 class MemeForm extends StatefulWidget {
@@ -44,11 +45,19 @@ class MemeFormState extends State<MemeForm> {
     if (_formKey.currentState!.validate()) {
       // If the form is valid, display a Snackbar.
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Generating Meme. Please Wait...')),
+        const SnackBar(content: Text('Generating Meme...')),
       );
       _formKey.currentState!.save();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(formData.length.toString())),
+      _formKey.currentState!.reset();
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          // Builder for the nextpage class's constructor.
+          builder: (context) => DisplayMemePage(
+            // Data as arguments to send to next page.
+            template: findTemplate(_chosenTemplate),
+            formData: formData,
+          ),
+        ),
       );
     }
   }
