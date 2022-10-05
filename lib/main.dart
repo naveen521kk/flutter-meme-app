@@ -9,7 +9,7 @@ import 'package:meme_app/meme_form.dart';
 
 Future<List<MemeTemplate>> fetchMemeTemplates(http.Client client) async {
   final response =
-      await client.get(Uri.parse('http://localhost:5000/get_memes'));
+      await client.get(Uri.parse('https://api.imgflip.com/get_memes'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
