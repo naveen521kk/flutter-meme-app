@@ -25,6 +25,8 @@ class MemeFormState extends State<MemeForm> {
   List<MemeTemplate> _templates = [];
   List<String> _memeTemplates = [];
 
+  Map<int, String> formData = {};
+
   MemeTemplate findTemplate(String templateName) {
     var defaultMemeTemplate = const MemeTemplate(
         id: '0', name: '', url: '', boxCount: 0, height: 0, width: 0);
@@ -36,6 +38,19 @@ class MemeFormState extends State<MemeForm> {
       (element) => element.name == templateName,
       orElse: (() => defaultMemeTemplate),
     );
+  }
+
+  void submitForm() {
+    if (_formKey.currentState!.validate()) {
+      // If the form is valid, display a Snackbar.
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Generating Meme. Please Wait...')),
+      );
+      _formKey.currentState!.save();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(formData.length.toString())),
+      );
+    }
   }
 
   @override
@@ -84,6 +99,9 @@ class MemeFormState extends State<MemeForm> {
             }
             return null;
           },
+          onSaved: (newValue) => {
+            formData[i] = newValue!,
+          },
           decoration: InputDecoration(
             border: const UnderlineInputBorder(),
             labelText: i == 0
@@ -105,14 +123,7 @@ class MemeFormState extends State<MemeForm> {
           padding: const EdgeInsets.symmetric(vertical: 30.0),
           child: ElevatedButton(
             onPressed: () {
-              // Validate returns true if the form is valid, or false otherwise.
-              if (_formKey.currentState!.validate()) {
-                // If the form is valid, display a snackbar. In the real world,
-                // you'd often call a server or save the information in a database.
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Processing Data')),
-                );
-              }
+              submitForm();
             },
             child: const Padding(
               padding: EdgeInsets.symmetric(vertical: 15.0),
