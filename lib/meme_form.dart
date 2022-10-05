@@ -101,9 +101,9 @@ class MemeFormState extends State<MemeForm> {
     // Add the submit button
     children.add(
       Center(
-          child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30.0),
-        child: ElevatedButton(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 30.0),
+          child: ElevatedButton(
             onPressed: () {
               // Validate returns true if the form is valid, or false otherwise.
               if (_formKey.currentState!.validate()) {
@@ -120,8 +120,10 @@ class MemeFormState extends State<MemeForm> {
                 'Submit',
                 style: TextStyle(fontSize: 16),
               ),
-            )),
-      )),
+            ),
+          ),
+        ),
+      ),
     );
 
     // Build a Form widget using the _formKey created above.
