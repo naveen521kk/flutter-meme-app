@@ -53,46 +53,6 @@ class MemeFormState extends State<MemeForm> {
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [
-      // FutureBuilder<List<MemeTemplate>>(
-      //   future: widget.future,
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasError) {
-      //       return Center(
-      //         child: Text(snapshot.error.toString()),
-      //       );
-      //     } else if (snapshot.hasData) {
-      //       _chosenTemplate = snapshot.data![0].name;
-      //       return DropdownButton<String>(
-      //         //elevation: 5,
-      //         value: _chosenTemplate,
-      //         style: const TextStyle(color: Colors.black),
-      //         items: snapshot.data!
-      //             .map<DropdownMenuItem<String>>((MemeTemplate value) {
-      //           return DropdownMenuItem<String>(
-      //             value: value.name,
-      //             child: Text(value.name),
-      //           );
-      //         }).toList(),
-      //         hint: const Text(
-      //           "Please choose a language",
-      //           style: TextStyle(
-      //               color: Colors.black,
-      //               fontSize: 16,
-      //               fontWeight: FontWeight.w600),
-      //         ),
-      //         onChanged: (String? value) {
-      //           setState(() {
-      //             _chosenTemplate = value!;
-      //           });
-      //         },
-      //       );
-      //     } else {
-      //       return const Center(
-      //         child: CircularProgressIndicator(),
-      //       );
-      //     }
-      //   },
-      // ),
       DropdownButton<String>(
         value: _chosenTemplate,
         style: const TextStyle(color: Colors.black),
