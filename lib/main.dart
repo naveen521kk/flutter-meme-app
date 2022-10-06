@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:meme_app/meme_form.dart';
+import 'package:meme_app/settings.dart';
 
 Future<List<MemeTemplate>> fetchMemeTemplates(http.Client client) async {
   try {
@@ -106,11 +107,25 @@ class _CreateMemePageState extends State<CreateMemePage> {
     futureMemeTemplates = fetchMemeTemplates(http.Client());
   }
 
+  void _showSettings() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SettingsPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text(widget.title)),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: _showSettings,
+            tooltip: 'Settings',
+          ),
+        ],
       ),
       body: Center(
         child: Column(

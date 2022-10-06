@@ -5,14 +5,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meme_app/main.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<Meme> createMeme(http.Client client, MemeTemplate template,
     Map<int, String> formData) async {
+  // Get username and password from settings.
+  final prefs = await SharedPreferences.getInstance();
+
   var templateId = template.id;
   var formBody = <String, String>{
     'template_id': templateId,
-    'username': '',
-    'password': '',
+    'username': prefs.getString('username') ?? '',
+    'password': prefs.getString('password') ?? '',
   };
   formData.forEach((key, value) {
     formBody['boxes[$key][text]'] = value;
@@ -30,7 +34,7 @@ Future<Meme> createMeme(http.Client client, MemeTemplate template,
     if (decoded['success'] == true) {
       return Meme.fromJson(decoded['data']);
     } else {
-      throw Exception(decoded);
+      throw Exception(decoded['error_message']);
     }
   } else {
     // If the server did not return a 200 OK response,
@@ -87,26 +91,39 @@ class _CreateMemePageState extends State<DisplayMemePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            FutureBuilder<Meme>(
-              future: futureMeme,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text(snapshot.error.toString()),
-                  );
-                } else if (snapshot.hasData) {
-                  memeUrl = snapshot.data!.url;
-                  return CachedNetworkImage(
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    imageUrl: snapshot.data!.url,
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FutureBuilder<Meme>(
+                future: futureMeme,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Column(
+                        children: [
+                          Text(
+                            snapshot.error.toString(),
+                            style: TextStyle(fontSize: 24),
+                          ),
+                          const Text(
+                              "Check settings for username and password.",
+                              style: TextStyle(fontSize: 20)),
+                        ],
+                      ),
+                    );
+                  } else if (snapshot.hasData) {
+                    memeUrl = snapshot.data!.url;
+                    return CachedNetworkImage(
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      imageUrl: snapshot.data!.url,
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
             ),
             ElevatedButton(
               onPressed: () {
