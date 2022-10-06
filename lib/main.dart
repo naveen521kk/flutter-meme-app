@@ -8,18 +8,24 @@ import 'package:flutter/material.dart';
 import 'package:meme_app/meme_form.dart';
 
 Future<List<MemeTemplate>> fetchMemeTemplates(http.Client client) async {
-  final response =
-      await client.get(Uri.parse('https://api.imgflip.com/get_memes'));
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    // Use the compute function to run parseMemesTemplates in a separate isolate.
-    return compute(parseMemesTemplates, response.body);
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load');
+  try {
+    final response =
+        await client.get(Uri.parse('https://api.imgflip.com/get_memes')
+            //Uri.parse('http://localhost:5000/get_memes'),
+            );
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      // Use the compute function to run parseMemesTemplates in a separate isolate.
+      return compute(parseMemesTemplates, response.body);
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load');
+    }
+  } catch (e) {
+    debugPrint(e.toString());
+    rethrow;
   }
 }
 

@@ -65,13 +65,19 @@ class MemeFormState extends State<MemeForm> {
   @override
   void initState() {
     super.initState();
-    widget.future.then((value) => {
-          setState(() {
-            _chosenTemplate = value[0].name;
-            _memeTemplates = value.map((e) => e.name).toList();
-            _templates = value;
-          })
-        });
+    widget.future
+        .then((value) => {
+              setState(() {
+                _chosenTemplate = value[0].name;
+                _memeTemplates = value.map((e) => e.name).toList();
+                _templates = value;
+              })
+            })
+        .catchError((error) => {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Error: $error')),
+              )
+            });
   }
 
   @override
