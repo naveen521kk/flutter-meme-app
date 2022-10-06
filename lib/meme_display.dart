@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:meme_app/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<Meme> createMeme(http.Client client, MemeTemplate template,
     Map<int, String> formData) async {
@@ -81,6 +82,12 @@ class _CreateMemePageState extends State<DisplayMemePage> {
     futureMeme = createMeme(http.Client(), widget.template, widget.formData);
   }
 
+  Future<void> _openUrl(Uri url) async {
+    if (!await launchUrl(url)) {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +109,7 @@ class _CreateMemePageState extends State<DisplayMemePage> {
                         children: [
                           Text(
                             snapshot.error.toString(),
-                            style: TextStyle(fontSize: 24),
+                            style: const TextStyle(fontSize: 24),
                           ),
                           const Text(
                               "Check settings for username and password.",
@@ -112,10 +119,29 @@ class _CreateMemePageState extends State<DisplayMemePage> {
                     );
                   } else if (snapshot.hasData) {
                     memeUrl = snapshot.data!.url;
-                    return CachedNetworkImage(
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      imageUrl: snapshot.data!.url,
+                    return Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            _openUrl(Uri.parse(snapshot.data!.url));
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 15.0),
+                            child: Text(
+                              'Open in Browser',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CachedNetworkImage(
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            imageUrl: snapshot.data!.url,
+                          ),
+                        ),
+                      ],
                     );
                   } else {
                     return const Center(
@@ -125,18 +151,6 @@ class _CreateMemePageState extends State<DisplayMemePage> {
                 },
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                //submitForm();
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0),
-                child: Text(
-                  'Download',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-            )
           ],
         ),
       ),
