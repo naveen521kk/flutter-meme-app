@@ -76,6 +76,9 @@ class MemeFormState extends State<MemeForm> {
 
   @override
   Widget build(BuildContext context) {
+    if (_templates.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
     List<Widget> children = [
       DropdownButton<String>(
         value: _chosenTemplate,
