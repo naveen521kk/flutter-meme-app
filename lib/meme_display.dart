@@ -107,13 +107,21 @@ class _CreateMemePageState extends State<DisplayMemePage> {
                     return Center(
                       child: Column(
                         children: [
-                          Text(
-                            snapshot.error.toString(),
-                            style: const TextStyle(fontSize: 24),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Text(
+                                snapshot.error.toString(),
+                                style: const TextStyle(fontSize: 24),
+                              ),
+                            ),
                           ),
-                          const Text(
-                              "Check settings for username and password.",
-                              style: TextStyle(fontSize: 20)),
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                                "Check settings for username and password.",
+                                style: TextStyle(fontSize: 20)),
+                          ),
                         ],
                       ),
                     );
