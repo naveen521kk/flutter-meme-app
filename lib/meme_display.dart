@@ -83,7 +83,7 @@ class _CreateMemePageState extends State<DisplayMemePage> {
   }
 
   Future<void> _openUrl(Uri url) async {
-    if (!await launchUrl(url)) {
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw 'Could not launch $url';
     }
   }
