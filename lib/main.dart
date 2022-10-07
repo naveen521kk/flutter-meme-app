@@ -131,26 +131,6 @@ class _CreateMemePageState extends State<CreateMemePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // CachedNetworkImage(
-            //   placeholder: (context, url) => const CircularProgressIndicator(),
-            //   imageUrl: 'https://picsum.photos/150',
-            // ),
-            // FutureBuilder<List<MemeTemplate>>(
-            //   future: futureMemeTemplates,
-            //   builder: (context, snapshot) {
-            //     if (snapshot.hasError) {
-            //       return Center(
-            //         child: Text(snapshot.error.toString()),
-            //       );
-            //     } else if (snapshot.hasData) {
-            //       return Text(snapshot.data![8].name);
-            //     } else {
-            //       return const Center(
-            //         child: CircularProgressIndicator(),
-            //       );
-            //     }
-            //   },
-            // ),
             MemeForm(
               future: futureMemeTemplates,
             ),
