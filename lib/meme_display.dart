@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:meme_app/settings.dart';
+import 'package:meme_app/main.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:meme_app/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -88,6 +90,13 @@ class _CreateMemePageState extends State<DisplayMemePage> {
     }
   }
 
+  void _showSettings() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SettingsPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,6 +130,18 @@ class _CreateMemePageState extends State<DisplayMemePage> {
                             child: Text(
                                 "Check settings for username and password.",
                                 style: TextStyle(fontSize: 20)),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: ElevatedButton(
+                              onPressed: _showSettings,
+                              child: const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Text("Settings"),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
