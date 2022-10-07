@@ -38,6 +38,11 @@ class _SettingsPageState extends State<SettingsPage> {
       prefs.setString('username', username);
       prefs.setString('password', password);
 
+      setState(() {
+        username = prefs.getString('username') ?? '';
+        password = prefs.getString('password') ?? '';
+      });
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Saved Successfully!')),
       );
