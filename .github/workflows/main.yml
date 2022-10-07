@@ -56,7 +56,7 @@ jobs:
               "Accept":"application/vnd.github.v3+json",
               "Authorization": f"token {access_token}"
           }
-          url = f"https://api.github.com/repos/ManimCommunity/manim/releases/tags/{ref_tag}"
+          url = f"https://api.github.com/repos/naveen521kk/flutter-meme-app/releases/tags/{ref_tag}"
           c = requests.get(url,headers=headers)
           upload_url=c.json()['upload_url']
           print(f"::set-output name=upload_url::{upload_url}")
