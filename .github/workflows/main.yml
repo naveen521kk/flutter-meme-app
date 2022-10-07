@@ -31,7 +31,7 @@ jobs:
     - name: Store artifacts
       uses: actions/upload-artifact@v2
       with:
-          path: build\app\outputs\flutter-apk\app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
           name: app
 
   release:
